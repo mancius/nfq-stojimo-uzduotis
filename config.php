@@ -14,3 +14,4 @@ if ( mysqli_connect_errno() ) {
 }
 
 $action = isset($_GET["action"]) ? $_GET["action"] : "";
+$pkodas = isset($_GET["pkodas"]) ? $_GET["pkodas"] : "";

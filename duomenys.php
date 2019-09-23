@@ -7,10 +7,13 @@ class zmogus {
 	public $vardas;
 	public $bukle;
 	
-	public function Set ($ID, $vardas, $bukle) {
+	public function Set ($ID, $vardas, $bukle, $priemimo_laikas, $atleidimo_laikas, $kodas) {
 		$this->ID = $ID;
 		$this->vardas = $vardas;
 		$this->bukle = $bukle;
+		$this->priemimo_laikas = $priemimo_laikas;
+		$this->atleidimo_laikas = $atleidimo_laikas;
+		$this->kodas = $kodas;
 	}
 }
 
@@ -40,16 +43,65 @@ class zmones {
 		
 		return $grazinti;
 	}
+	
+	public function eileje(){
+		$grazinti = 0;
+		foreach ($this->zmones as $zmogus) {
+			if($zmogus->bukle == 0) $grazinti++;
+		}
+		
+		return $grazinti;
+	}
+	
+	public function apsilankymoVidurkis(){
+		$vidurkis = 0;
+		$pabaigti = 0;
+		foreach ($this->zmones as $zmogus) {
+			if($zmogus->bukle == 2) {
+				$pabaigti++;
+				$vidurkis += $zmogus->atleidimo_laikas - $zmogus->priemimo_laikas;
+			}
+		}
+		$vidurkis /= $pabaigti;
+		return round($vidurkis);
+	}
+	
+	public function tikrintiKoda($kodas){
+		$grazinti = false;
+		$index = 0;
+		
+		foreach ($this->zmones as $zmogus){
+			if($zmogus->bukle == 0 && $zmogus->kodas == $kodas) $grazinti = $index;
+			$index++;
+		}
+		return $grazinti;
+	}
+	public function kelintasEilej($ID) {
+		$kelintas = 1;
+		$rastas = false;
+		
+		foreach ($this->zmones as $zmogus){
+			if(!$rastas && $zmogus->ID == $ID) {
+				$rastas = true;
+			}
+			if($zmogus->bukle == 0) $kelintas++;
+		}
+		
+		return $kelintas;
+	}
 }
 
-function prideti($con, $vardas) {
-	$con->query("INSERT INTO `eile` (vardas) VALUES ('".$vardas."')");
+function prideti($con, $vardas, $kodas) {
+	$con->query("INSERT INTO `eile` (vardas, kodas) VALUES ('".$vardas."', '".$kodas."')");
 }
-function istrinti($con, $ID) {
-	$con->query("DELETE FROM `eile` WHERE ID = ".$ID." LIMIT 1");
+function atleisti($con, $ID) {
+	$con->query("UPDATE `eile` SET atleidimo_laikas = ".time().", bukle = 2 WHERE ID = ".$ID." LIMIT 1");
 }
 function aptarnauti($con) {
-	$con->query("UPDATE `eile` SET bukle = '1' ORDER BY ID ASC LIMIT 1");
+	$con->query("UPDATE `eile` SET bukle = 1, priemimo_laikas = ".time()." WHERE bukle = 0 ORDER BY ID ASC LIMIT 1");
+}
+function generuotiKoda(){
+	return rand(1000000000, 9999999999);
 }
 function atnaujintiDuomenis($con){
 	
@@ -62,7 +114,10 @@ function atnaujintiDuomenis($con){
 		$zmogus->Set(
 			$row["ID"], 
 			$row["vardas"],
-			$row["bukle"]
+			$row["bukle"],
+			$row["priemimo_laikas"],
+			$row["atleidimo_laikas"],
+			$row["kodas"]
 		);
 
 		$zmones->Prideti($zmogus);

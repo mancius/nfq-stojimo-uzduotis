@@ -5,7 +5,7 @@ require_once("duomenys.php");
 if($action == "isvyti") {
 	if($zmones->Aptarnaujama() !== false) {
 		$zmogus = $zmones->GautiIndex($zmones->Aptarnaujama());
-		istrinti($con, $zmogus->ID);
+		atleisti($con, $zmogus->ID);
 		$zmones = atnaujintiDuomenis($con);
 		echo "<p><font color=\"green\">Isvijote lauk</font></p>";
 	}
@@ -21,7 +21,7 @@ if($action == "aptarnauti") {
 	}
 }
 
-if($zmones->kiekis > 0 && !($zmones->kiekis == 1 && $zmones->Aptarnaujama() !== false)) {
+if($zmones->eileje()) {
 	echo "<h1>Eileje esantys zmones: <a href=\"?action=aptarnauti\">Aptarnauti</a></h1>";
 	for($i = 0; $i < $zmones->kiekis; $i++) {
 		
@@ -46,9 +46,11 @@ else {
 }
 ?>
 
+
 <h2 style="margin-top:100px;">Navigacija</h2>
 <ul>
 	<li><a href="index.php">Svieslente</a></li>
 	<li><a href="administravimas.php">Specialisto puslapis</a></li>
 	<li><a href="ivedimas.php">Uzsiregistravimas i eile</a></li>
+	<li><a href="lankytojo.php">Lankytojo puslapis</a></li>
 </ul>

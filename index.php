@@ -2,7 +2,7 @@
 require_once("config.php");
 require_once("duomenys.php");
 
-if($zmones->kiekis > 0 && !($zmones->kiekis == 1 && $zmones->Aptarnaujama() !== false)) {
+if($zmones->eileje()) {
 	echo "<h1>Eileje esantys zmones:</h1>";
 	for($i = 0; $i < $zmones->kiekis; $i++) {
 		
@@ -15,6 +15,8 @@ if($zmones->kiekis > 0 && !($zmones->kiekis == 1 && $zmones->Aptarnaujama() !== 
 else {
 	echo "<h1>Eileje zmoniu nera.</h1>";
 }
+
+echo $zmones->apsilankymoVidurkis();
 
 if($zmones->Aptarnaujama() !== false) {
 	echo "<h1>Siuo metu aptarnaujamas:</h1>";
@@ -31,4 +33,5 @@ else {
 	<li><a href="index.php">Svieslente</a></li>
 	<li><a href="administravimas.php">Specialisto puslapis</a></li>
 	<li><a href="ivedimas.php">Uzsiregistravimas i eile</a></li>
+	<li><a href="lankytojo.php">Lankytojo puslapis</a></li>
 </ul>
