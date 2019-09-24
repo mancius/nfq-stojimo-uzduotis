@@ -6,14 +6,19 @@ class zmogus {
 	public $ID;
 	public $vardas;
 	public $bukle;
+	public $priemimo_laikas;
+	public $atleidimo_laikas;
+	public $kodas;
+	public $indexas;
 	
-	public function Set ($ID, $vardas, $bukle, $priemimo_laikas, $atleidimo_laikas, $kodas) {
+	public function Set ($ID, $vardas, $bukle, $priemimo_laikas, $atleidimo_laikas, $kodas, $indexas) {
 		$this->ID = $ID;
 		$this->vardas = $vardas;
 		$this->bukle = $bukle;
 		$this->priemimo_laikas = $priemimo_laikas;
 		$this->atleidimo_laikas = $atleidimo_laikas;
 		$this->kodas = $kodas;
+		$this->indexas = $indexas;
 	}
 }
 
@@ -125,6 +130,7 @@ function atnaujintiDuomenis($con){
 	
 	$zmones = new zmones;
 	$query = $con->query("SELECT * FROM `eile` ORDER BY ID ASC");
+	$kiekis = 0;
 	while($row = $query->fetch_assoc()){
 
 		$zmogus = new zmogus;
@@ -135,10 +141,13 @@ function atnaujintiDuomenis($con){
 			$row["bukle"],
 			$row["priemimo_laikas"],
 			$row["atleidimo_laikas"],
-			$row["kodas"]
+			$row["kodas"],
+			$kiekis
 		);
 
 		$zmones->Prideti($zmogus);
+		
+		$kiekis++;
 	}
 	
 	return $zmones;

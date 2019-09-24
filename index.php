@@ -2,11 +2,11 @@
 require_once("config.php");
 require_once("duomenys.php");
 ?>
+<head>
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+</head>
 <h1 style="margin-bottom:100px;">Svieslente</h1>
 <?php
-
-if($zmones->Aptarnaujama() !== false) $aptarnaujamas = $zmones->GautiIndex($zmones->Aptarnaujama());
-else $aptarnaujamas = false;
 
 if($zmones->eileje()) {
 	echo "<h1>Eileje esantys zmones:</h1>";
@@ -14,9 +14,23 @@ if($zmones->eileje()) {
 		
 		$zmogus = $zmones->GautiIndex($i);
 		if($zmogus->bukle == 0) {
-			$likoLaukti = likoRealiai($aptarnaujamas, likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama()));
-			echo "<p>".$zmogus->vardas.". Liko laukti: ".$likoLaukti."</p>";
+			
+			$laikas = likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama());
+			
+			echo "<p>".$zmogus->vardas.". Liko laukti <span id=\"likolaukti".$zmogus->ID."\"></span> sek</p>";
+			
+			echo "
+				<script language=\"javascript\" type=\"text/javascript\">
+
+				var timeout = setInterval(reloadChat, 1000);    
+				function reloadChat () {
+
+					$('#likolaukti".$zmogus->ID."').load('laikas.php?liko=".$laikas."');
+				}
+				</script>
+			";
 		}
+		
 	}
 }
 else {

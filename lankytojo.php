@@ -2,8 +2,12 @@
 require_once("config.php");
 require_once("duomenys.php");
 ?>
+<head>
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+</head>
 <h1 style="margin-bottom:100px;">Kliento puslapis</h1>
 <?php
+
 $prisijunges = $zmones->tikrintiKoda($pkodas);
 
 if(!$prisijunges): ?>
@@ -16,12 +20,24 @@ Iveskite savo koda: <input type="text" name="pkodas"/> <button type="submit">Ive
 <?php if($prisijunges){
 	
 	$zmogus = $zmones->GautiIndex($prisijunges);
-	if($zmones->Aptarnaujama() !== false) $aptarnaujamas = $zmones->GautiIndex($zmones->Aptarnaujama());
-	else $aptarnaujamas = false;
 	
 	echo "<h1>Labas, ". $zmogus->vardas."</h1>";
 	echo "<p>Esi ".$zmones->kelintasEilej($zmogus->ID)." eilej</p>";
-	echo "<p>Daugmaz liko laukti ".likoRealiai($aptarnaujamas, likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama()))." sek.</p>";
+	
+	$laikas = likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama());
+	
+	echo "<p>Liko laukti <span id=\"likolaukti".$zmogus->ID."\"></span> sek.</p>";
+	
+	echo "
+		<script language=\"javascript\" type=\"text/javascript\">
+
+		var timeout = setInterval(reloadChat, 1000);    
+		function reloadChat () {
+
+			$('#likolaukti".$zmogus->ID."').load('laikas.php?liko=".$laikas."');
+		}
+		</script>
+	";
 } ?>
 
 <h2 style="margin-top:100px;">Navigacija</h2>
