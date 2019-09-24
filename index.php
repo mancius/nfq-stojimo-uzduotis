@@ -16,8 +16,6 @@ else {
 	echo "<h1>Eileje zmoniu nera.</h1>";
 }
 
-echo $zmones->apsilankymoVidurkis();
-
 if($zmones->Aptarnaujama() !== false) {
 	echo "<h1>Siuo metu aptarnaujamas:</h1>";
 	$zmogus = $zmones->GautiIndex($zmones->Aptarnaujama());
