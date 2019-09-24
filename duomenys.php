@@ -77,14 +77,14 @@ class zmones {
 		return $grazinti;
 	}
 	public function kelintasEilej($ID) {
-		$kelintas = 1;
-		$rastas = false;
+		$kelintas = false;
+		$index = 0;
 		
 		foreach ($this->zmones as $zmogus){
-			if(!$rastas && $zmogus->ID == $ID) {
-				$rastas = true;
+			if($zmogus->bukle == 0) {
+				$index++;
+				if($zmogus->ID == $ID) $kelintas = $index;
 			}
-			if($zmogus->bukle == 0) $kelintas++;
 		}
 		
 		return $kelintas;
