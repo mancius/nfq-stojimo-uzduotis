@@ -1,7 +1,9 @@
 <?php
 require_once("config.php");
 require_once("duomenys.php");
-
+?>
+<h1 style="margin-bottom:100px;">Kliento puslapis</h1>
+<?php
 $prisijunges = $zmones->tikrintiKoda($pkodas);
 
 if(!$prisijunges): ?>
@@ -9,11 +11,14 @@ if(!$prisijunges): ?>
 Iveskite savo koda: <input type="text" name="pkodas"/> <button type="submit">Ivesti</button>
 </form>
 <?php endif; ?>
+
 <?php if($prisijunges){
+	
 	$zmogus = $zmones->GautiIndex($prisijunges);
-	echo "<h1>Labas, ". $zmogus->vardas."</h1>
-	Esi ".$zmones->kelintasEilej($zmogus->ID)." eilėj
-	";
+	
+	echo "<h1>Labas, ". $zmogus->vardas."</h1>";
+	echo "<p>Esi ".$zmones->kelintasEilej($zmogus->ID)." eilej</p>";
+	echo "<p>Daugmaz liko laukti ".likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama())." sek.</p>";
 } ?>
 
 <h2 style="margin-top:100px;">Navigacija</h2>

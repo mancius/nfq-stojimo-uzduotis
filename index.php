@@ -1,7 +1,9 @@
 <?php
 require_once("config.php");
 require_once("duomenys.php");
-
+?>
+<h1 style="margin-bottom:100px;">Svieslente</h1>
+<?php
 if($zmones->eileje()) {
 	echo "<h1>Eileje esantys zmones:</h1>";
 	for($i = 0; $i < $zmones->kiekis; $i++) {

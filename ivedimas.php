@@ -1,14 +1,16 @@
 <?php
 require_once("config.php");
 require_once("duomenys.php");
-
+?>
+<h1 style="margin-bottom:100px;">Uzsiregistravimas</h1>
+<?php
 if(isset($_POST["vardas"])) : ?>
 <?php
 	$kodas = generuotiKoda();
 	prideti($con, $_POST["vardas"], $kodas);
 ?>
 <h2>Uzsiregistravote i eile.</h2>
-<p>Pamatyti sarasa galite paspaudus <a href="index.php">cia</a></p><br/>
+<p>Pamatyti sarasa galite paspaudus <a href="index.php">cia</a></p>
 <p>Ieiti i savo meniu galite paspaudus <a href="lankytojo.php">cia</a> ir suvedus koda <?php echo $kodas; ?></p><br/>
 <?php endif; ?>
 

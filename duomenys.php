@@ -103,6 +103,13 @@ function aptarnauti($con) {
 function generuotiKoda(){
 	return rand(1000000000, 9999999999);
 }
+function likoLaukti($vidutinis, $kelintas, $aptarnaujamas){
+	$grazinti = $vidutinis * $kelintas;
+	
+	if($aptarnaujamas===false) $grazinti -= $vidutinis;
+	
+	return $grazinti;
+}
 function atnaujintiDuomenis($con){
 	
 	$zmones = new zmones;

@@ -1,7 +1,9 @@
 <?php
 require_once("config.php");
 require_once("duomenys.php");
-
+?>
+<h1 style="margin-bottom:100px;">Specialisto puslapis</h1>
+<?php
 if($action == "isvyti") {
 	if($zmones->Aptarnaujama() !== false) {
 		$zmogus = $zmones->GautiIndex($zmones->Aptarnaujama());
