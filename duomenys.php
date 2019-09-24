@@ -110,6 +110,17 @@ function likoLaukti($vidutinis, $kelintas, $aptarnaujamas){
 	
 	return $grazinti;
 }
+function likoRealiai($priimtas, $liko){
+	if($priimtas !== false) {
+		$grazinti = $priimtas->priemimo_laikas + $liko - time();
+	
+		if($grazinti < 0) $grazinti = 0;
+	}
+	else {
+		$grazinti = $liko;
+	}
+	return $grazinti;
+}
 function atnaujintiDuomenis($con){
 	
 	$zmones = new zmones;

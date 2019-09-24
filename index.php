@@ -4,13 +4,18 @@ require_once("duomenys.php");
 ?>
 <h1 style="margin-bottom:100px;">Svieslente</h1>
 <?php
+
+if($zmones->Aptarnaujama() !== false) $aptarnaujamas = $zmones->GautiIndex($zmones->Aptarnaujama());
+else $aptarnaujamas = false;
+
 if($zmones->eileje()) {
 	echo "<h1>Eileje esantys zmones:</h1>";
 	for($i = 0; $i < $zmones->kiekis; $i++) {
 		
 		$zmogus = $zmones->GautiIndex($i);
 		if($zmogus->bukle == 0) {
-			echo "<p>".$zmogus->vardas."</p>";
+			$likoLaukti = likoRealiai($aptarnaujamas, likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama()));
+			echo "<p>".$zmogus->vardas.". Liko laukti: ".$likoLaukti."</p>";
 		}
 	}
 }

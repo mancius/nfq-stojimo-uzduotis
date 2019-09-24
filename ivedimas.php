@@ -3,16 +3,24 @@ require_once("config.php");
 require_once("duomenys.php");
 ?>
 <h1 style="margin-bottom:100px;">Uzsiregistravimas</h1>
+
 <?php
-if(isset($_POST["vardas"])) : ?>
-<?php
-	$kodas = generuotiKoda();
-	prideti($con, $_POST["vardas"], $kodas);
+
+if(isset($_POST["vardas"])) {
+
+	if(strlen($_POST["vardas"]) < 2) {
+		echo "<p>Įvyko klaida, kreipkitės telefonu</p>";
+	}
+	else {
+		$kodas = generuotiKoda();
+		prideti($con, $_POST["vardas"], $kodas);
+		echo "<h2>Užregistruota sėkmingai</h2>";
+		echo "<p>Pamatyti sarasa galite paspaudus <a href=\"index.php\">cia</a></p>";
+		echo "<p>Ieiti i savo meniu galite paspaudus <a href=\"lankytojo.php\">cia</a> ir suvedus koda ".$kodas."</p><br/>";
+	}
+}
+
 ?>
-<h2>Uzsiregistravote i eile.</h2>
-<p>Pamatyti sarasa galite paspaudus <a href="index.php">cia</a></p>
-<p>Ieiti i savo meniu galite paspaudus <a href="lankytojo.php">cia</a> ir suvedus koda <?php echo $kodas; ?></p><br/>
-<?php endif; ?>
 
 <form action="" method="POST">
 Iveskite savo varda: <input type="text" name="vardas"/> <button type="submit">Ivesti</button>

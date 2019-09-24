@@ -8,6 +8,7 @@ $prisijunges = $zmones->tikrintiKoda($pkodas);
 
 if(!$prisijunges): ?>
 <form action="" method="GET">
+<p>Informacija galite matyti tik jei esate uzsiregistraves ir eileje</p>
 Iveskite savo koda: <input type="text" name="pkodas"/> <button type="submit">Ivesti</button>
 </form>
 <?php endif; ?>
@@ -15,10 +16,12 @@ Iveskite savo koda: <input type="text" name="pkodas"/> <button type="submit">Ive
 <?php if($prisijunges){
 	
 	$zmogus = $zmones->GautiIndex($prisijunges);
+	if($zmones->Aptarnaujama() !== false) $aptarnaujamas = $zmones->GautiIndex($zmones->Aptarnaujama());
+	else $aptarnaujamas = false;
 	
 	echo "<h1>Labas, ". $zmogus->vardas."</h1>";
 	echo "<p>Esi ".$zmones->kelintasEilej($zmogus->ID)." eilej</p>";
-	echo "<p>Daugmaz liko laukti ".likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama())." sek.</p>";
+	echo "<p>Daugmaz liko laukti ".likoRealiai($aptarnaujamas, likoLaukti($zmones->apsilankymoVidurkis(), $zmones->kelintasEilej($zmogus->ID), $zmones->Aptarnaujama()))." sek.</p>";
 } ?>
 
 <h2 style="margin-top:100px;">Navigacija</h2>
